@@ -14,7 +14,7 @@ const PostCard = ({
     <>
       <div className="post">
         <Link to={`/post/${_id}`}>
-          <img src={`http://localhost:4000/${coverImage}`} alt="blog_img" />
+          <img src={`https://mern-blog-phi-sage.vercel.app/${coverImage}`} alt="blog_img" />
         </Link>
 
         <div className="texts">

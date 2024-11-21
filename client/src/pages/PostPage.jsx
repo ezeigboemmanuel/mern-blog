@@ -9,7 +9,7 @@ const PostPage = () => {
   const [redirect, setRedirect] = useState(false);
   const { userInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${params.id}`).then((response) =>
+    fetch(`https://mern-blog-phi-sage.vercel.app/post/${params.id}`).then((response) =>
       response.json().then((post) => setPostData(post))
     );
   }, [params]);
@@ -29,7 +29,7 @@ const PostPage = () => {
   const cleanedContent = cleanContent(postData.content);
 
   const deletePost = async () => {
-    const response = await fetch(`http://localhost:4000/post/${params.id}`, {
+    const response = await fetch(`https://mern-blog-phi-sage.vercel.app/post/${params.id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -98,7 +98,7 @@ const PostPage = () => {
       )}
 
       <div className="image">
-        <img src={`http://localhost:4000/${postData.coverImage}`} alt="" />
+        <img src={`https://mern-blog-phi-sage.vercel.app/${postData.coverImage}`} alt="" />
       </div>
       <div
         className="content"

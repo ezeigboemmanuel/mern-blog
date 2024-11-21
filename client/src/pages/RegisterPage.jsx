@@ -5,7 +5,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const register = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:4000/register", {
+    const response = await fetch("https://mern-blog-phi-sage.vercel.app/register", {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: {

@@ -11,7 +11,7 @@ const EditPost = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`).then((response) => {
+    fetch(`https://mern-blog-phi-sage.vercel.app/post/${id}`).then((response) => {
       response.json().then((postData) => {
         setTitle(postData.title);
         setSummary(postData.summary);
@@ -31,7 +31,7 @@ const EditPost = () => {
       data.set("file", files?.[0]);
     }
 
-    const response = await fetch(`http://localhost:4000/edit/${id}`, {
+    const response = await fetch(`https://mern-blog-phi-sage.vercel.app/edit/${id}`, {
       method: "PUT",
       body: data,
       credentials: "include",
