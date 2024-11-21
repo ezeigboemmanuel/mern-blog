@@ -4,7 +4,7 @@ import PostCard from "../components/PostCard";
 const IndexPage = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("https://mern-blog-phi-sage.vercel.app/post").then((response) => {
+    fetch("http://localhost:4000/post").then((response) => {
       response.json().then((posts) => {
         setPosts(posts);
       });

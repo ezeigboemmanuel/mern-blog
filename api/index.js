@@ -20,22 +20,12 @@ const salt = bcrypt.genSaltSync(10);
 const secret = "hsjsjsksksksksrurrd";
 
 // middlewares
-app.use(
-  cors({
-    origin: ["https://mern-blog-frontend-rose.vercel.app"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true,
-  })
-); // for cors
+app.use(cors({ credentials: true, origin: "http://localhost:3000" })); // for cors
 app.use(express.json()); // for json
 app.use(cookieParser()); // for cookies
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 mongoose.connect(process.env.MONGO_URI);
-
-app.get("/", (req, res) => {
-  res.json("Working");
-});
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;

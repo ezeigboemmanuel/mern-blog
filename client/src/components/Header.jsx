@@ -5,7 +5,7 @@ import { UserContext } from "../UserContext";
 const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch("https://mern-blog-phi-sage.vercel.app/profile", {
+    fetch("http://localhost:4000/profile", {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
@@ -15,7 +15,7 @@ const Header = () => {
   }, [setUserInfo]);
 
   const logout = () => {
-    fetch("https://mern-blog-phi-sage.vercel.app/logout", {
+    fetch("http://localhost:4000/logout", {
       credentials: "include",
       method: "POST",
     });
