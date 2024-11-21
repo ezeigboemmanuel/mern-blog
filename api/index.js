@@ -26,8 +26,8 @@ app.use(cookieParser()); // for cookies
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
-    origin: [""],
-    methods: ["POST", "GET"],
+    origin: ["https://mern-blog-frontend-rose.vercel.app/"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
 );
