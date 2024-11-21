@@ -4,7 +4,7 @@ import PostCard from "../components/PostCard";
 const IndexPage = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4000/post").then((response) => {
+    fetch("https://mern-blog-backend-f3i6.onrender.com/post").then((response) => {
       response.json().then((posts) => {
         setPosts(posts);
       });

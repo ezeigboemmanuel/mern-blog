@@ -11,7 +11,7 @@ const EditPost = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/post/${id}`).then((response) => {
+    fetch(`https://mern-blog-backend-f3i6.onrender.com/post/${id}`).then((response) => {
       response.json().then((postData) => {
         setTitle(postData.title);
         setSummary(postData.summary);
