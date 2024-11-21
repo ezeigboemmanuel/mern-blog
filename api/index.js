@@ -20,7 +20,7 @@ const salt = bcrypt.genSaltSync(10);
 const secret = "hsjsjsksksksksrurrd";
 
 // middlewares
-app.use(cors({ credentials: true, origin: "http://localhost:3000" })); // for cors
+app.use(cors({ credentials: true, origin: "https://mern-blog-backend-f3i6.onrender.com" })); // for cors
 app.use(express.json()); // for json
 app.use(cookieParser()); // for cookies
 app.use("/uploads", express.static(__dirname + "/uploads"));
