@@ -9,6 +9,8 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const fs = require("fs");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
+const path = require("path")
 
 dotenv.config();
 
@@ -16,16 +18,25 @@ const uploadMiddleware = multer({ dest: "uploads/" });
 
 const app = express();
 
+const port = process.env.PORT || 4000;
+
+const __dirname2 = path.resolve();
+
 const salt = bcrypt.genSaltSync(10);
 const secret = "hsjsjsksksksksrurrd";
 
 // middlewares
-app.use(cors({ credentials: true, origin: "https://mern-blog-frontend-crl7.onrender.com" })); // for cors
+app.use(
+  cors({
+    credentials: true,
+    origin: "http:localhost:4000",
+  })
+); // for cors
 app.use(express.json()); // for json
 app.use(cookieParser()); // for cookies
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-mongoose.connect(process.env.MONGO_URI);
+// mongoose.connect(process.env.MONGO_URI);
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -192,6 +203,17 @@ app.get("/post/:id", async (req, res) => {
   res.json(post);
 });
 
-const port = process.env.PORT || 4000
+// Deployment
 
-app.listen(port);
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static(path.join(__dirname2, "/client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname2, "client", "build", "index.html"));
+  });
+}
+
+app.listen(port, () => {
+  connectDB();
+  console.log("Server started at http://localhost:" + port);
+});
