@@ -19,7 +19,7 @@ const CreatePost = () => {
     data.set("content", content);
     data.set("file", files[0]);
 
-    const response = await fetch("https://mern-blog-backend-f3i6.onrender.com/post", {
+    const response = await fetch("https://mern-blog-ml6n.onrender.com/post", {
       method: "POST",
       body: data,
       credentials: "include",

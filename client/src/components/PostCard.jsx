@@ -14,7 +14,7 @@ const PostCard = ({
     <>
       <div className="post">
         <Link to={`/post/${_id}`}>
-          <img src={`https://mern-blog-backend-f3i6.onrender.com/${coverImage}`} alt="blog_img" />
+          <img src={`https://mern-blog-ml6n.onrender.com/${coverImage}`} alt="blog_img" />
         </Link>
 
         <div className="texts">
