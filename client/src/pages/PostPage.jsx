@@ -9,7 +9,7 @@ const PostPage = () => {
   const [redirect, setRedirect] = useState(false);
   const { userInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch(`https://mern-blog-ml6n.onrender.com/post/${params.id}`).then((response) =>
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/post/${params.id}`).then((response) =>
       response.json().then((post) => setPostData(post))
     );
   }, [params]);
@@ -29,7 +29,7 @@ const PostPage = () => {
   const cleanedContent = cleanContent(postData.content);
 
   const deletePost = async () => {
-    const response = await fetch(`https://mern-blog-ml6n.onrender.com/post/${params.id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/post/${params.id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -98,7 +98,7 @@ const PostPage = () => {
       )}
 
       <div className="image">
-        <img src={`https://mern-blog-ml6n.onrender.com/${postData.coverImage}`} alt="" />
+        <img src={`${postData.coverImage}`} alt="" />
       </div>
       <div
         className="content"

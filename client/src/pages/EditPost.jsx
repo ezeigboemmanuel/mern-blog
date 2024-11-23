@@ -11,7 +11,7 @@ const EditPost = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`https://mern-blog-ml6n.onrender.com/post/${id}`).then((response) => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/post/${id}`).then((response) => {
       response.json().then((postData) => {
         setTitle(postData.title);
         setSummary(postData.summary);
@@ -31,7 +31,7 @@ const EditPost = () => {
       data.set("file", files?.[0]);
     }
 
-    const response = await fetch(`https://mern-blog-phi-sage.vercel.app/edit/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/edit/${id}`, {
       method: "PUT",
       body: data,
       credentials: "include",

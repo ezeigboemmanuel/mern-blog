@@ -5,7 +5,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const register = async (e) => {
     e.preventDefault();
-    const response = await fetch("https://mern-blog-ml6n.onrender.com/register", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/register`, {
       method: "POST",
       body: JSON.stringify({ username, password }),
       headers: {

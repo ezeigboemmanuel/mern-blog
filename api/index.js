@@ -8,11 +8,11 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const fs = require("fs");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 const connectDB = require("./config/db.js");
-const path = require("path")
-
-dotenv.config();
+const path = require("path");
+const cloudinary = require("cloudinary").v2;
+console.log(cloudinary.config().cloud_name);
 
 const uploadMiddleware = multer({ dest: "uploads/" });
 
@@ -29,12 +29,11 @@ const secret = "hsjsjsksksksksrurrd";
 app.use(
   cors({
     credentials: true,
-    origin: "http:localhost:4000",
+    origin: "http://localhost:3000",
   })
 ); // for cors
 app.use(express.json()); // for json
 app.use(cookieParser()); // for cookies
-app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // mongoose.connect(process.env.MONGO_URI);
 
@@ -93,8 +92,9 @@ app.post("/logout", async (req, res) => {
   res.cookie("token", " ").json("ok");
 });
 
-app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
+app.post("/post", uploadMiddleware.single("image"), async (req, res) => {
   const { originalname, path } = req.file;
+  console.log("PATH: ", path);
   const parts = originalname.split(".");
   const ext = parts[parts.length - 1];
   const newPath = path + "." + ext;
@@ -111,6 +111,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
     if (err) {
       return res.status(401).json({ error: "Invalid token" });
     }
+    const cloudImg = await cloudinary.uploader.upload(newPath);
 
     const { title, summary, content } = req.body;
 
@@ -118,7 +119,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
       title,
       summary,
       content,
-      coverImage: newPath,
+      coverImage: cloudImg.secure_url,
       author: info.id,
     });
 
@@ -148,6 +149,7 @@ app.put("/edit/:id", uploadMiddleware.single("file"), async (req, res) => {
       return res.status(401).json({ error: "Invalid token" });
     }
     const { id } = req.params;
+    const cloudImg = await cloudinary.uploader.upload(newPath);
     const { title, summary, content } = req.body;
     const postDoc = await Post.findById(id);
 
@@ -162,7 +164,7 @@ app.put("/edit/:id", uploadMiddleware.single("file"), async (req, res) => {
       title,
       summary,
       content,
-      coverImage: newPath ? newPath : postDoc.coverImage,
+      coverImage: newPath ? cloudImg.secure_url : postDoc.coverImage,
     });
 
     res.json(updatedPost);
@@ -182,6 +184,13 @@ app.delete("/post/:id", async (req, res) => {
       return res.status(401).json({ error: "Invalid token" });
     }
     const { id } = req.params;
+    const postDoc = await Post.findById(id);
+    const parts = postDoc.coverImage.split("/");
+    const fileName = parts[parts.length - 1]; // Extract the last part: "ihwklaco9wt2d0kqdqrs.png"
+    const imageId = fileName.split(".")[0];
+    cloudinary.uploader
+      .destroy(imageId)
+      .then((result) => console.log("result: ", result));
 
     await Post.findByIdAndDelete(id);
 

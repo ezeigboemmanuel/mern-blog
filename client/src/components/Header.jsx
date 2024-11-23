@@ -5,7 +5,7 @@ import { UserContext } from "../UserContext";
 const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch("https://mern-blog-ml6n.onrender.com/profile", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
@@ -15,7 +15,7 @@ const Header = () => {
   }, [setUserInfo]);
 
   const logout = () => {
-    fetch("https://mern-blog-ml6n.onrender.com/logout", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/logout`, {
       credentials: "include",
       method: "POST",
     });
