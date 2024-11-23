@@ -29,7 +29,7 @@ const secret = "hsjsjsksksksksrurrd";
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: "https://mern-blog-ml6n.onrender.com",
   })
 ); // for cors
 app.use(express.json()); // for json
