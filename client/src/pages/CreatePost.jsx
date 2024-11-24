@@ -27,6 +27,8 @@ const CreatePost = () => {
 
     if (response.ok) {
       setRedirect(true);
+    }else{
+      alert("Something went wrong, try again.")
     }
   };
 
