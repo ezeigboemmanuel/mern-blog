@@ -5,7 +5,7 @@ import { UserContext } from "../UserContext";
 const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/profile`, {
       credentials: "include",
     }).then((response) => {
       response.json().then((userInfo) => {
@@ -15,7 +15,7 @@ const Header = () => {
   }, [setUserInfo]);
 
   const logout = () => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/logout`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/logout`, {
       credentials: "include",
       method: "POST",
     });

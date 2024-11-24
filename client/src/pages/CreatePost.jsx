@@ -19,7 +19,7 @@ const CreatePost = () => {
     formData.append("content", content);
     formData.append("image", image);
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/post`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/post`, {
       method: "POST",
       body: formData,
       credentials: "include",

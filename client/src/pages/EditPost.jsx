@@ -11,7 +11,7 @@ const EditPost = () => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/post/${id}`).then((response) => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/post/${id}`).then((response) => {
       response.json().then((postData) => {
         setTitle(postData.title);
         setSummary(postData.summary);
@@ -31,7 +31,7 @@ const EditPost = () => {
       data.set("file", files?.[0]);
     }
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/edit/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/edit/${id}`, {
       method: "PUT",
       body: data,
       credentials: "include",

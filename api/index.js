@@ -37,7 +37,7 @@ app.use(cookieParser()); // for cookies
 
 // mongoose.connect(process.env.MONGO_URI);
 
-app.post("/register", async (req, res) => {
+app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
   try {
     const userDoc = await User.create({
@@ -50,7 +50,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username: username });
   const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -71,7 +71,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
+app.get("/api/profile", async (req, res) => {
   const { token } = req.cookies;
 
   if (!token) {
@@ -88,11 +88,11 @@ app.get("/profile", async (req, res) => {
   });
 });
 
-app.post("/logout", async (req, res) => {
+app.post("/api/logout", async (req, res) => {
   res.cookie("token", " ").json("ok");
 });
 
-app.post("/post", uploadMiddleware.single("image"), async (req, res) => {
+app.post("/api/post", uploadMiddleware.single("image"), async (req, res) => {
   const { originalname, path } = req.file;
   console.log("PATH: ", path);
   const parts = originalname.split(".");
@@ -127,7 +127,7 @@ app.post("/post", uploadMiddleware.single("image"), async (req, res) => {
   });
 });
 
-app.put("/edit/:id", uploadMiddleware.single("file"), async (req, res) => {
+app.put("/api/edit/:id", uploadMiddleware.single("file"), async (req, res) => {
   let newPath = null;
   if (req.file) {
     const { originalname, path } = req.file;
@@ -171,7 +171,7 @@ app.put("/edit/:id", uploadMiddleware.single("file"), async (req, res) => {
   });
 });
 
-app.delete("/post/:id", async (req, res) => {
+app.delete("/api/post/:id", async (req, res) => {
   const { token } = req.cookies;
 
   if (!token) {
@@ -198,7 +198,7 @@ app.delete("/post/:id", async (req, res) => {
   });
 });
 
-app.get("/post", async (req, res) => {
+app.get("/api/post", async (req, res) => {
   const posts = await Post.find()
     .populate("author", ["username"])
     .sort({ createdAt: -1 })
@@ -206,7 +206,7 @@ app.get("/post", async (req, res) => {
   res.json(posts);
 });
 
-app.get("/post/:id", async (req, res) => {
+app.get("/api/post/:id", async (req, res) => {
   const { id } = req.params;
   const post = await Post.findById(id).populate("author", ["username"]);
   res.json(post);
